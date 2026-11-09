@@ -93,6 +93,19 @@ VITE_PORTFOLIO_LOCATION="Your City, Country"
 VITE_PORTFOLIO_SUMMARY="I build reliable systems and product experiences with a focus on maintainability and business impact."
 ```
 
+## SonarCloud next steps checklist
+
+Use this checklist when you are ready to enable SonarCloud for the repo:
+
+1. Sign in to SonarCloud and create or open the project for this repository.
+2. Confirm the organization is `dhyanaswain`.
+3. Confirm the project key is `dhyanaswain_my-portfolio`.
+4. In GitHub, open repository settings and add a repository secret named `SONAR_TOKEN`.
+5. Generate the token in SonarCloud under your account security settings and paste it as the secret value.
+6. Make sure the repo is connected to the SonarCloud project from the GitHub import or project setup flow.
+7. Push a new commit or re-run the SonarCloud workflow from GitHub Actions.
+8. Verify the job succeeds and the project is reported in SonarCloud.
+
 ## Notes
 
 - The resume asset is served from `public/resume.pdf`.

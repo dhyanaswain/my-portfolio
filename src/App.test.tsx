@@ -1,11 +1,12 @@
 import { cleanup, render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import App from './App'
 import { portfolio } from './data/portfolio'
 
 afterEach(() => {
   cleanup()
+  vi.unstubAllEnvs()
 })
 
 describe('Portfolio app', () => {
@@ -34,10 +35,34 @@ describe('Portfolio app', () => {
     const contactLinks = screen.getAllByRole('link', { name: /^Contact me$/i })
     expect(contactLinks).toHaveLength(2)
     contactLinks.forEach((link) => {
-      expect(link).toHaveAttribute('href', `mailto:${portfolio.email}`)
+      expect(link).toHaveAttribute('href', portfolio.email ? `mailto:${portfolio.email}` : '#contact')
     })
-    expect(screen.getByRole('link', { name: /github/i })).toHaveAttribute('href', portfolio.github)
-    expect(screen.getByRole('link', { name: /linkedin/i })).toHaveAttribute('href', portfolio.linkedin)
+
+    if (portfolio.github) {
+      expect(screen.getByRole('link', { name: /github/i })).toHaveAttribute('href', portfolio.github)
+    } else {
+      expect(screen.queryByRole('link', { name: /^GitHub$/i })).not.toBeInTheDocument()
+    }
+
+    if (portfolio.linkedin) {
+      expect(screen.getByRole('link', { name: /linkedin/i })).toHaveAttribute('href', portfolio.linkedin)
+    } else {
+      expect(screen.queryByRole('link', { name: /^LinkedIn$/i })).not.toBeInTheDocument()
+    }
+  })
+
+  it('falls back to section anchors instead of placeholder contact links when values are missing', () => {
+    vi.stubEnv('VITE_PORTFOLIO_EMAIL', 'yourname@example.com')
+    vi.stubEnv('VITE_PORTFOLIO_GITHUB', 'https://github.com/yourusername')
+    vi.stubEnv('VITE_PORTFOLIO_LINKEDIN', 'https://linkedin.com/in/yourusername')
+
+    render(<App />)
+
+    const contactLinks = screen.getAllByRole('link', { name: /^Contact me$/i })
+    expect(contactLinks[0]).toHaveAttribute('href', '#contact')
+    expect(screen.queryByRole('link', { name: /^yourname@example.com$/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /^GitHub$/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /^LinkedIn$/i })).not.toBeInTheDocument()
   })
 
   it('renders the professional experience section with all timeline entries', () => {

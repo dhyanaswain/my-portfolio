@@ -1,15 +1,36 @@
+const PLACEHOLDER_PATTERNS = [
+  /your\s*name/i,
+  /your\s*city/i,
+  /your\s*username/i,
+  /yourname@example\.com/i,
+  /example\.com/i,
+]
+
+const isPlaceholderValue = (value: string) =>
+  value.trim().length === 0 || PLACEHOLDER_PATTERNS.some((pattern) => pattern.test(value.trim()))
+
 const readEnv = (key: string, fallback: string) => {
   const value = import.meta.env[key]
-  return typeof value === 'string' && value.trim().length > 0 ? value.trim() : fallback
+  const candidate = typeof value === 'string' ? value.trim() : ''
+
+  if (candidate && !isPlaceholderValue(candidate)) {
+    return candidate
+  }
+
+  if (fallback && !isPlaceholderValue(fallback)) {
+    return fallback
+  }
+
+  return ''
 }
 
 export const portfolio = {
   name: readEnv('VITE_PORTFOLIO_NAME', 'Your Name'),
   title: readEnv('VITE_PORTFOLIO_TITLE', 'Senior Software Engineer'),
   location: readEnv('VITE_PORTFOLIO_LOCATION', 'Your City, Country'),
-  email: readEnv('VITE_PORTFOLIO_EMAIL', 'yourname@example.com'),
-  github: readEnv('VITE_PORTFOLIO_GITHUB', 'https://github.com/yourusername'),
-  linkedin: readEnv('VITE_PORTFOLIO_LINKEDIN', 'https://linkedin.com/in/yourusername'),
+  email: readEnv('VITE_PORTFOLIO_EMAIL', ''),
+  github: readEnv('VITE_PORTFOLIO_GITHUB', ''),
+  linkedin: readEnv('VITE_PORTFOLIO_LINKEDIN', ''),
   summary: readEnv(
     'VITE_PORTFOLIO_SUMMARY',
     'I build reliable software systems, product experiences, and scalable platform work with a strong focus on business impact, maintainability, and thoughtful engineering.',

@@ -1,6 +1,8 @@
 import { portfolio } from '../data/portfolio'
 
 export function HeroSection() {
+  const contactHref = portfolio.email ? `mailto:${portfolio.email}` : '#contact'
+
   return (
     <section className="grid items-center gap-8 pb-2 pt-6 lg:grid-cols-[1.55fr_0.75fr] lg:gap-10 lg:pt-8">
       <div>
@@ -24,7 +26,7 @@ export function HeroSection() {
             View work
           </a>
           <a
-            href={`mailto:${portfolio.email}`}
+            href={contactHref}
             className="inline-flex min-h-11 items-center justify-center rounded-full border border-slate-700 bg-slate-900/50 px-5 py-3 text-sm font-semibold text-slate-100 transition duration-200 hover:-translate-y-0.5 hover:border-slate-500 hover:bg-slate-900/70"
           >
             Contact me
