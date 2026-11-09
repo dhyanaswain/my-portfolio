@@ -51,18 +51,24 @@ describe('Portfolio app', () => {
     }
   })
 
-  it('falls back to section anchors instead of placeholder contact links when values are missing', () => {
-    vi.stubEnv('VITE_PORTFOLIO_EMAIL', 'yourname@example.com')
-    vi.stubEnv('VITE_PORTFOLIO_GITHUB', 'https://github.com/yourusername')
-    vi.stubEnv('VITE_PORTFOLIO_LINKEDIN', 'https://linkedin.com/in/yourusername')
-
+  it('uses the configured portfolio contact details when valid env values are present', () => {
     render(<App />)
 
     const contactLinks = screen.getAllByRole('link', { name: /^Contact me$/i })
-    expect(contactLinks[0]).toHaveAttribute('href', '#contact')
-    expect(screen.queryByRole('link', { name: /^yourname@example.com$/i })).not.toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: /^GitHub$/i })).not.toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: /^LinkedIn$/i })).not.toBeInTheDocument()
+    expect(contactLinks).toHaveLength(2)
+    contactLinks.forEach((link) => {
+      expect(link).toHaveAttribute('href', `mailto:${portfolio.email}`)
+    })
+    expect(screen.getByRole('link', { name: /^Resume$/i })).toHaveAttribute(
+      'href',
+      `${import.meta.env.BASE_URL}resume.pdf`,
+    )
+    expect(screen.getByRole('link', { name: /^dhyana_swain@yahoo.com$/i })).toHaveAttribute(
+      'href',
+      `mailto:${portfolio.email}`,
+    )
+    expect(screen.getByRole('link', { name: /^GitHub$/i })).toHaveAttribute('href', portfolio.github)
+    expect(screen.getByRole('link', { name: /^LinkedIn$/i })).toHaveAttribute('href', portfolio.linkedin)
   })
 
   it('renders the professional experience section with all timeline entries', () => {

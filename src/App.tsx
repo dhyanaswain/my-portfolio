@@ -18,6 +18,8 @@ function ResumePreview({
   onMouseEnter: () => void
   onMouseLeave: () => void
 }) {
+  const resumeUrl = `${import.meta.env.BASE_URL}resume.pdf`
+
   return (
     <div
       className={[
@@ -40,14 +42,14 @@ function ResumePreview({
         <div className="p-2">
           <div className="overflow-hidden rounded-xl border border-slate-800 bg-white">
             <object
-              data="/resume.pdf"
+              data={resumeUrl}
               type="application/pdf"
               aria-label="Resume preview"
               className="h-[320px] w-full bg-white"
             >
               <iframe
                 title="Resume preview"
-                src="/resume.pdf"
+                src={resumeUrl}
                 className="h-[320px] w-full border-0"
               />
             </object>
@@ -61,6 +63,7 @@ function ResumePreview({
 function App() {
   const [isResumePreviewVisible, setIsResumePreviewVisible] = useState(false)
   const contactHref = portfolio.email ? `mailto:${portfolio.email}` : '#contact'
+  const resumeUrl = `${import.meta.env.BASE_URL}resume.pdf`
 
   const showResumePreview = () => {
     setIsResumePreviewVisible(true)
@@ -99,7 +102,7 @@ function App() {
 
               <div className="relative" onMouseLeave={hideResumePreview}>
                 <a
-                  href="/resume.pdf"
+                  href={resumeUrl}
                   onMouseEnter={showResumePreview}
                   onFocus={showResumePreview}
                   onMouseLeave={hideResumePreview}
