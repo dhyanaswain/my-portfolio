@@ -18,13 +18,13 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     env:
-      VITE_PORTFOLIO_NAME: ${{ secrets.VITE_PORTFOLIO_NAME }}
-      VITE_PORTFOLIO_EMAIL: ${{ secrets.VITE_PORTFOLIO_EMAIL }}
-      VITE_PORTFOLIO_GITHUB: ${{ secrets.VITE_PORTFOLIO_GITHUB }}
-      VITE_PORTFOLIO_LINKEDIN: ${{ secrets.VITE_PORTFOLIO_LINKEDIN }}
-      VITE_PORTFOLIO_TITLE: ${{ secrets.VITE_PORTFOLIO_TITLE }}
-      VITE_PORTFOLIO_LOCATION: ${{ secrets.VITE_PORTFOLIO_LOCATION }}
-      VITE_PORTFOLIO_SUMMARY: ${{ secrets.VITE_PORTFOLIO_SUMMARY }}
+      VITE_PORTFOLIO_NAME: "Dhyana Swain"
+      VITE_PORTFOLIO_EMAIL: "dhyana.swain@gmail.com"
+      VITE_PORTFOLIO_GITHUB: "https://github.com/dhyanaswain"
+      VITE_PORTFOLIO_LINKEDIN: "https://www.linkedin.com/in/dhyana-swain"
+      VITE_PORTFOLIO_TITLE: "Senior Software Engineer"
+      VITE_PORTFOLIO_LOCATION: "Bangalore, India"
+      VITE_PORTFOLIO_SUMMARY: "I build reliable software systems, product experiences, and scalable platform work with a strong focus on business impact, maintainability, and thoughtful engineering."
 
     steps:
       - name: Check out repository
