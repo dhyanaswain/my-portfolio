@@ -9,6 +9,14 @@ on:
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
+    env:
+      VITE_PORTFOLIO_NAME: "Dhyana Swain"
+      VITE_PORTFOLIO_EMAIL: "dhyana_swain@yahoo.com"
+      VITE_PORTFOLIO_GITHUB: "https://github.com/dhyanaswain"
+      VITE_PORTFOLIO_LINKEDIN: "https://www.linkedin.com/in/dhyana-swain"
+      VITE_PORTFOLIO_TITLE: "Senior Software Engineer"
+      VITE_PORTFOLIO_LOCATION: "Bangalore, India"
+      VITE_PORTFOLIO_SUMMARY: "I build reliable software systems, product experiences, and scalable platform work with a strong focus on business impact, maintainability, and thoughtful engineering."
 
     steps:
       - name: Check out code
